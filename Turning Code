@@ -1,0 +1,95 @@
+#include "Enes100.h"
+#include "Tank.h"
+#include <math.h>
+
+/* The code inside void setup() runs only once, before the code in void loop(). */
+void setup() {
+	Enes100.begin("Team Name Here", CRASH_SITE, 3, 8, 9); // Required before you can use any other Enes100 functions.
+	Tank.begin(); // Required before you can use any other Tank functions.
+	//setBothMotors(255); // Set both motors to full power.
+}
+
+/* The code in void loop() runs repeatedly forever */ 
+void loop() { 
+	/*
+	Enes100.updateLocation();
+	Enes100.print("Distance: ");
+	Enes100.println(Tank.readDistanceSensor(1));
+	Enes100.print("X location: ");
+	Enes100.updateLocation();
+	Enes100.println(Enes100.location.x);
+	Enes100.print("Y location: ");
+	Enes100.updateLocation();
+	Enes100.println(Enes100.location.y);
+	*/
+	Enes100.updateLocation();
+	Enes100.print("Angle: ");
+	Enes100.updateLocation();
+	double conversion = (180/M_PI);
+	double currTheta = Enes100.location.theta + M_PI;
+	while(Tank.readDistanceSensor(1) > 0.4 && Enes100.location.y > 0.3 && 		                 			Enes100.location.y < 1.8 && Enes100.location.x < 3.8 && 
+		  Enes100.location.x > 0.2) {
+		setBothMotors(255);
+		Enes100.print("Angle: ");
+		Enes100.updateLocation();
+		double conversion = (180/M_PI);
+		double currTheta = Enes100.location.theta + M_PI;
+		Enes100.println(currTheta*conversion);
+		Enes100.print("Distance ");
+		Enes100.updateLocation();
+		Enes100.println(Tank.readDistanceSensor(1));
+		Enes100.print("X location: ");
+		Enes100.updateLocation();
+		Enes100.println(Enes100.location.x);
+		Enes100.print("Y location: ");
+		Enes100.updateLocation();
+		Enes100.println(Enes100.location.y);
+	}
+	setBothMotors(-255);
+	delay(150);
+	Tank.setLeftMotorPWM(200);
+	Tank.setRightMotorPWM(-200);
+	delay(1500);
+	setBothMotors(255);
+	delay(1000);
+}
+
+/* This is an example function to make both motors drive
+ * at the given power.
+ */
+void setBothMotors(int speed) {
+	Tank.setLeftMotorPWM(speed);
+	Tank.setRightMotorPWM(speed);
+}
+
+void turnNumDegrees(int angle) {
+	Enes100.updateLocation();
+	double conversion = (180/M_PI);
+	double currTheta = Enes100.location.theta + M_PI;
+	double currAngle = currTheta*conversion;
+	double desireAngle = (currAngle + angle)%360;
+	Enes100.println
+	if(desireAngle < currAngle) {
+		while(currAngle > desireAngle) {
+			Tank.setLeftMotorPWM(200);
+			Tank.setRightMotorPWM(-200);
+			currTheta = 
+			currAngle = 
+		}
+	}
+	
+	while(currAngle < 
+		curr = 
+	double currTheta = Enes100.location.theta + M_PI;
+}
+		  
+double getCurrAngle() {
+	
+}
+
+/* Another example function that prints pi. */
+void printPi() {
+	Enes100.println(M_PI);  // M_PI is from the math.h library above.
+}
+
+
