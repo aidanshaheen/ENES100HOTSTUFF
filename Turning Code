@@ -70,21 +70,27 @@ void turnNumDegrees(int angle) {
 	double desireAngle = (currAngle + angle)%360;
 	Enes100.println
 	if(desireAngle < currAngle) {
-		while(currAngle > desireAngle) {
+		while(getCurrAngle() > desireAngle) {
 			Tank.setLeftMotorPWM(200);
 			Tank.setRightMotorPWM(-200);
-			currTheta = 
-			currAngle = 
+			Tank.setBothMotors(0);
 		}
+	} else if(desireAngle > currAngle) {
+		while(getCurrAngle() < desireAngle) {
+			Tank.setLeftMotorPWM(200);
+			Tank.setRightMotorPWM(-200);
+			Tank.setBothMotors(0);
+		}
+		
 	}
-	
-	while(currAngle < 
-		curr = 
-	double currTheta = Enes100.location.theta + M_PI;
 }
 		  
 double getCurrAngle() {
-	
+	double conversion = (180/M_PI);
+	Enes100.updateLocation();
+	double currTheta = Enes100.location.theta + M_PI;
+	double currAngle = currTheta*conversion;
+	return currAngle;
 }
 
 /* Another example function that prints pi. */
