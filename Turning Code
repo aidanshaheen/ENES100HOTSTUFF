@@ -47,8 +47,9 @@ void loop() {
 	}
 	setBothMotors(-255);
 	delay(150);
-	Tank.setLeftMotorPWM(200);
-	Tank.setRightMotorPWM(-200);
+	//Tank.setLeftMotorPWM(200);
+	//Tank.setRightMotorPWM(-200);
+	turnNumDegrees(180);
 	delay(1500);
 	setBothMotors(255);
 	delay(1000);
@@ -62,24 +63,21 @@ void setBothMotors(int speed) {
 	Tank.setRightMotorPWM(speed);
 }
 
-void turnNumDegrees(int angle) {
+void turnNumDegrees(double angle) {
 	Enes100.updateLocation();
 	double conversion = (180/M_PI);
 	double currTheta = Enes100.location.theta + M_PI;
 	double currAngle = currTheta*conversion;
-	double desireAngle = (currAngle + angle)%360;
-	Enes100.println
+	int desireAngle = (int(currAngle) + int(angle))%360;
 	if(desireAngle < currAngle) {
 		while(getCurrAngle() > desireAngle) {
 			Tank.setLeftMotorPWM(200);
 			Tank.setRightMotorPWM(-200);
-			Tank.setBothMotors(0);
 		}
 	} else if(desireAngle > currAngle) {
 		while(getCurrAngle() < desireAngle) {
 			Tank.setLeftMotorPWM(200);
 			Tank.setRightMotorPWM(-200);
-			Tank.setBothMotors(0);
 		}
 		
 	}
@@ -97,5 +95,3 @@ double getCurrAngle() {
 void printPi() {
 	Enes100.println(M_PI);  // M_PI is from the math.h library above.
 }
-
-
